@@ -3,15 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    
+
     # Mac-/Darwin-specific management
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # Make Mac GUI apps work
     mac-app-util.url = "github:hraban/mac-app-util";
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # Manage configs in home directory
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -35,12 +35,25 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, mac-app-util, home-manager, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle }:
-  let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nix-darwin,
+    mac-app-util,
+    home-manager,
+    nix-homebrew,
+    homebrew-core,
+    homebrew-cask,
+    homebrew-bundle,
+  }: let
     # custom variable used elsewhere
     username = "andersbennedsgaard";
 
-    configuration = { pkgs, lib, ... }: {
+    configuration = {
+      pkgs,
+      lib,
+      ...
+    }: {
       # system-wide installations
       environment.systemPackages = [
         pkgs.coreutils
@@ -48,21 +61,27 @@
         pkgs.vscode
         pkgs.obsidian
         pkgs.aerospace
+        pkgs.nixd # new Nix LSP
+        pkgs.alejandra # nix formatter
         # ghostty can't currently be built with Nix
         # see: https://github.com/NixOS/nixpkgs/issues/388984
-        # pkgs.ghostty 
+        # pkgs.ghostty
       ];
 
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "slack"
-        "vscode"
-        "obsidian"
-      ];
+      # needed for nixd to expand nix pkgs
+      nix.nixPath = ["nixpkgs=${nixpkgs}"];
+
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [
+          "slack"
+          "vscode"
+          "obsidian"
+        ];
 
       security.pam.services.sudo_local.touchIdAuth = true;
 
       fonts.packages = [];
-  
+
       homebrew = {
         enable = true;
         casks = [
@@ -125,7 +144,7 @@
 
       programs.zsh.enable = true;
 
-      environment.shells = [ pkgs.bash pkgs.zsh ];
+      environment.shells = [pkgs.bash pkgs.zsh];
 
       # Enable Docker daemon
       # virtualisation.docker.enable = true;
@@ -147,8 +166,7 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
-  in
-  {
+  in {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#ND361630
     darwinConfigurations."ND361630" = nix-darwin.lib.darwinSystem {
@@ -213,10 +231,10 @@
                     pkgs.shellcheck
                     pkgs.tree
                     pkgs.wget
-                    pkgs.curl 
+                    pkgs.curl
                     pkgs.less
                     pkgs.unixtools.watch
-                    pkgs.colima 
+                    pkgs.colima
                     pkgs.azure-cli
                     pkgs.kubelogin # azure kubelogin
                     pkgs.kubectl
