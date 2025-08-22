@@ -242,6 +242,11 @@
                     pkgs.kubernetes-helm
                     pkgs.kustomize
                     pkgs.bun
+                    pkgs.k3d
+                    pkgs.zstd
+                    pkgs.btop
+                    pkgs.golangci-lint
+                    pkgs.gotools
                   ];
                   # user-specific env vars
                   sessionVariables = {
