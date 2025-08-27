@@ -103,13 +103,13 @@
           mru-spaces = false; # automatically rearrange spaces based on recent use
           persistent-apps = [
             "/System/Applications/Mail.app"
-            "/Applications/Firefox.app"
             "/Applications/Microsoft Teams.app"
             "/Applications/Nix Apps/Slack.app"
+            "/Applications/Spotify.app"
             "/Applications/Nix Apps/Obsidian.app"
+            "/Applications/Firefox.app"
             "/Applications/Ghostty.app"
             "/Applications/FortiClient.app"
-            "/Applications/Spotify.app"
           ];
         };
         finder = {
@@ -247,6 +247,7 @@
                     pkgs.btop
                     pkgs.golangci-lint
                     pkgs.gotools
+                    pkgs.azure-functions-core-tools
                   ];
                   # user-specific env vars
                   sessionVariables = {
