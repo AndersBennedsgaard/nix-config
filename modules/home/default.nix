@@ -52,6 +52,7 @@
       golangci-lint
       gotools
       databricks-cli
+      gcc # for treesitter
     ];
 
     # user-specific env vars
