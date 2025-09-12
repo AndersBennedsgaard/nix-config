@@ -20,7 +20,6 @@
     homeDirectory = "/home/${vars.user.name}";
     packages = with pkgs; [
       neovim
-      tmux
       act
       jq
       yq-go
@@ -33,7 +32,6 @@
       openssl
       ruff
       uv
-      python313
       ripgrep
       shellcheck
       tree
