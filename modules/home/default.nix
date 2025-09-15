@@ -1,5 +1,4 @@
 {
-  inpuvars,
   pkgs,
   lib,
   vars,
@@ -52,6 +51,7 @@
       gcc # for treesitter
       azure-functions-core-tools
       mise
+      cargo
     ];
 
     # user-specific env vars
@@ -137,6 +137,9 @@
         ];
         theme = "robbyrussell";
       };
+      initContent = ''
+        eval "$(${pkgs.mise}/bin/mise activate zsh)"
+      '';
     };
   };
 }
