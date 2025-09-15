@@ -21,7 +21,6 @@
       neovim
       act
       jq
-      yq-go
       just
       go
       imagemagick
@@ -52,6 +51,8 @@
       azure-functions-core-tools
       mise
       cargo
+      nixd
+      alejandra
     ];
 
     # user-specific env vars

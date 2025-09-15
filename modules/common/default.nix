@@ -50,8 +50,6 @@
     htop
     neovim
     just
-    nixd
-    alejandra
   ];
 
   environment.sessionVariables = {
