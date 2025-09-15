@@ -1,8 +1,8 @@
 {
-  inputs,
-  vars,
+  inpuvars,
   pkgs,
   lib,
+  vars,
   ...
 }: {
   nixpkgs = {
@@ -51,6 +51,7 @@
       databricks-cli
       gcc # for treesitter
       azure-functions-core-tools
+      mise
     ];
 
     # user-specific env vars
@@ -102,6 +103,13 @@
       extraConfig = {
         init.defaultBranch = "main";
       };
+
+      includes = [
+        {
+          path = "/home/${vars.user.name}/projects/work/.gitconfig";
+          condition = "gitdir:/home/${vars.user.name}/projects/work/";
+        }
+      ];
     };
 
     tmux = {

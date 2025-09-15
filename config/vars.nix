@@ -1,7 +1,7 @@
 {lib, ...}: rec {
   user = {
     name = "anders";
-    fullName = "Anders Bennedsgaard";
+    fullName = "Anders Bjørnkjær Bennedsgaard";
     email = "abbennedsgaard@gmail.com";
     packages = {
       terminal = "ghostty";
