@@ -1,4 +1,4 @@
-{lib, ...}: rec {
+{...}: {
   user = {
     name = "anders";
     fullName = "Anders Bjørnkjær Bennedsgaard";

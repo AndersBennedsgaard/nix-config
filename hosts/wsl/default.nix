@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  vars,
-  ...
-}: {
+{vars, ...}: {
   imports = [
     ../../modules/common
   ];

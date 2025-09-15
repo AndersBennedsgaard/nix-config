@@ -18,7 +18,6 @@
     home-manager,
     ...
   }: let
-    lib = nixpkgs.lib // home-manager.lib;
     vars = import ./config/vars.nix {inherit (nixpkgs) lib;};
 
     # Helper for home-manager module
