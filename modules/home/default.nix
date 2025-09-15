@@ -25,7 +25,6 @@
       yq-go
       just
       go
-      git
       imagemagick
       nodejs_24
       ollama
@@ -51,6 +50,7 @@
       gotools
       databricks-cli
       gcc # for treesitter
+      azure-functions-core-tools
     ];
 
     # user-specific env vars
@@ -98,6 +98,10 @@
       enable = true;
       userEmail = vars.user.email;
       userName = vars.user.fullName;
+
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
     };
 
     tmux = {
