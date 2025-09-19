@@ -49,6 +49,7 @@
       databricks-cli
       gcc # for treesitter
       azure-functions-core-tools
+      azure-cli
       mise
       cargo
       nixd
