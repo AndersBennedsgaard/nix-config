@@ -32,7 +32,7 @@
   users.users.${vars.user.name} = {
     isNormalUser = true;
     description = "${vars.user.fullName}";
-    extraGroups = ["networkmanager" "wheel" "podman"];
+    extraGroups = ["networkmanager" "wheel" "podman" "docker"];
     # ignoreShellProgramCheck = true;
     shell = pkgs.${vars.user.packages.shell};
   };
@@ -84,5 +84,8 @@
 
   environment.shells = [pkgs.bash pkgs.zsh];
 
-  virtualisation.podman.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    podman.enable = true;
+  };
 }
