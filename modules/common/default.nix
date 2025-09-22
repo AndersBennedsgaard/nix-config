@@ -46,6 +46,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # python with nix-ld wrapper to fix dynamic linker issues for numpy, pandas, etc.
     (writeShellScriptBin "python" ''
       export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
       exec ${python3}/bin/python "$@"
