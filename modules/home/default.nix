@@ -9,6 +9,8 @@
       allowUnfreePredicate = pkg:
         builtins.elem (lib.getName pkg) [
           "databricks-cli"
+          "terraform"
+          "claude-code"
         ];
     };
   };
@@ -54,6 +56,9 @@
       cargo
       nixd
       alejandra
+      terraform
+      claude-code
+      google-cloud-sdk
     ];
 
     # user-specific env vars
