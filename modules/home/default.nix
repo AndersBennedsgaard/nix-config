@@ -59,6 +59,7 @@
       terraform
       claude-code
       google-cloud-sdk
+      font-awesome
     ];
 
     # user-specific env vars
@@ -127,6 +128,53 @@
       mouse = true;
       prefix = "C-a";
       resizeAmount = 1;
+      terminal = "screen-256color";
+      plugins = with pkgs; [
+        {
+          plugin = tmuxPlugins.rose-pine;
+          extraConfig = ''
+            set -g @rose_pine_variant 'moon'
+            set -g @rose_pine_host 'on'
+          '';
+        }
+      ];
+      extraConfig = ''
+        # split panes using b(below) and r(right)
+        unbind '"'
+        unbind '%'
+        bind b split-window -v -c "#{pane_current_path}"
+        bind r split-window -h -c "#{pane_current_path}"
+
+        # unbind default arrow key navigation
+        unbind Up
+        unbind Down
+        unbind Left
+        unbind Right
+
+        # unbind default arrow key resizing
+        unbind C-Up
+        unbind C-Down
+        unbind C-Left
+        unbind C-Right
+
+        # prefix+h/j/k/l to navigate panes
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
+
+        # prefix+ctrl+h/j/k/l to resize panes
+        bind -r C-h resize-pane -L 1
+        bind -r C-j resize-pane -D 1
+        bind -r C-k resize-pane -U 1
+        bind -r C-l resize-pane -R 1
+
+        # open a shell in a popup window
+        bind C-t display-popup \
+          -d "#{pane_current_path}" \
+          -w 60% -h 60% \
+          -E "zsh"
+      '';
     };
 
     zsh = {
