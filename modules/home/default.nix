@@ -60,6 +60,7 @@
       claude-code
       google-cloud-sdk
       font-awesome
+      docker-buildx
     ];
 
     # user-specific env vars
