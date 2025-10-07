@@ -23,6 +23,7 @@
       neovim
       act
       jq
+      yq-go
       just
       go
       imagemagick
