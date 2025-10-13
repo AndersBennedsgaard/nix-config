@@ -62,6 +62,7 @@
       google-cloud-sdk
       font-awesome
       docker-buildx
+      prettierd
     ];
 
     # user-specific env vars
