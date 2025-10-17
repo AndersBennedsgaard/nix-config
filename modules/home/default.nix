@@ -63,6 +63,7 @@
       font-awesome
       docker-buildx
       prettierd
+      unzip
     ];
 
     # user-specific env vars
@@ -78,6 +79,7 @@
     sessionPath = [
       "$HOME/.local/bin"
       "$HOME/go/bin"
+      "$HOME/.opencode/bin" # if opencode is installed
     ];
 
     shellAliases = {
