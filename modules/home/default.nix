@@ -64,6 +64,7 @@
       docker-buildx
       prettierd
       unzip
+      pre-commit
     ];
 
     # user-specific env vars
