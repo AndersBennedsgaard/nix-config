@@ -3,7 +3,33 @@
   lib,
   vars,
   ...
-}: {
+}: let
+  clipScript = pkgs.writeShellScriptBin "clip" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    # Prefer pbcopy (macOS)
+    if command -v pbcopy >/dev/null 2>&1; then
+      pbcopy
+      exit 0
+    fi
+
+    # Prefer xclip (Linux/X11)
+    if command -v xclip >/dev/null 2>&1; then
+      xclip -selection clipboard
+      exit 0
+    fi
+
+    # Detect WSL
+    if grep -qi "microsoft" /proc/version 2>/dev/null; then
+      iconv -f utf8 -t utf16le | clip.exe
+      exit 0
+    fi
+
+    echo "No clipboard utility available (pbcopy, xclip, or WSL clip.exe)." >&2
+    exit 1
+  '';
+in {
   nixpkgs = {
     config = {
       allowUnfreePredicate = pkg:
@@ -65,6 +91,7 @@
       prettierd
       unzip
       pre-commit
+      clipScript
     ];
 
     # user-specific env vars
