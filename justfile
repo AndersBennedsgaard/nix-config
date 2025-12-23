@@ -1,28 +1,25 @@
-# set shell := ["zsh", "-cu"]
-
-# Test a specific host
-# Usage: $ just test host <host name>
-test host:
-  sudo nixos-rebuild test --flake .#{{host}}
-
-# Deploy to a specific host
-# Usage: $ just deploy host <host name>
-deploy host:
-  sudo nixos-rebuild switch --flake .#{{host}}
-
-# Upgrade a specific host
-# Usage: $ just deploy host <host name>
-upgrade host:
-  sudo nixos-rebuild --upgrade switch --flake .#{{host}}
-
-# Debug deployment to a specific host
-# Usage: $ just debug host <host name>
-debug host:
-  sudo nixos-rebuild switch --flake .#{{host}} --show-trace --verbose
+default:
+  @just --list
 
 # List available hosts (assuming they're in the hosts directory)
 list-hosts:
   @ls hosts/
+
+# Test a specific host. Usage: $ just test host <host name>
+test host:
+  sudo nixos-rebuild test --flake .#{{host}}
+
+# Deploy to a specific host. Usage: $ just deploy host <host name>
+deploy host:
+  sudo nixos-rebuild switch --flake .#{{host}}
+
+# Upgrade a specific host. Usage: $ just deploy host <host name>
+upgrade host:
+  sudo nixos-rebuild --upgrade switch --flake .#{{host}}
+
+# Debug deployment to a specific host. Usage: $ just debug host <host name>
+debug host:
+  sudo nixos-rebuild switch --flake .#{{host}} --show-trace --verbose
 
 # List past NixOS generations
 list-generations:
@@ -36,24 +33,25 @@ delete-specific-generations generations:
 delete-all-old-generations:
   sudo nix-collect-garbage --delete-old
 
-up:
+# Update all inputs
+update:
   nix flake update
 
-# Update specific input
-# usage: make upp i=home-manager
-upp:
-  nix flake update $(i)
+# Update specific input. Usage: just update-input <input>
+update-input input:
+  nix flake update {{input}}
 
+# Show Nix profile history
 history:
   sudo nix profile history --profile /nix/var/nix/profiles/system
 
 repl:
   nix repl -f flake:nixpkgs
 
+# Clean Nix profile history older than 7 days
 clean:
-  # remove all generations older than 7 days
   sudo nix profile wipe-history --profile /nix/var/nix/profiles/system  --older-than 7d
 
+# Run Nix garbage collection
 gc:
-  # garbage collect all unused nix store entries
   sudo nix-collect-garbage --delete-old
