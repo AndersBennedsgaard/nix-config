@@ -138,11 +138,13 @@ in {
 
     git = {
       enable = true;
-      userEmail = vars.user.email;
-      userName = vars.user.fullName;
 
-      extraConfig = {
+      settings = {
         init.defaultBranch = "main";
+        user = {
+          name = vars.user.fullName;
+          email = vars.user.email;
+        };
       };
 
       includes = [
