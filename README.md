@@ -7,7 +7,7 @@ My NixOS and Home Manager configurations for personal use.
 - [Nix](https://nixos.org/download.html) with flakes enabled
 - Git
 
-## Mac Setup
+## Mac Setup (not tested)
 
 For Mac hosts using nix-darwin, first install the Darwin rebuild CLI:
 
