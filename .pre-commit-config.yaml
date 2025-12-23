@@ -1,0 +1,10 @@
+repos:
+  - repo: https://github.com/kamadorueda/alejandra
+    rev: 3.0.0  # Use the latest stable release
+    hooks:
+      - id: alejandra
+        name: Format Nix files with Alejandra
+        entry: alejandra
+        language: system
+        types: [nix]
+
