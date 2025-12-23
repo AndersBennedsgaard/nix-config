@@ -5,21 +5,50 @@ default:
 list-hosts:
   @ls hosts/
 
-# Test a specific host. Usage: $ just test host <host name>
+# Test a specific host with dry-run. Usage: $ just dry-run <host name>
+dry-run host:
+  #!/usr/bin/env bash
+  if nix eval .#darwinConfigurations.{{host}}.config.networking.hostName &>/dev/null; then
+    nix build .#darwinConfigurations.{{host}}.system --dry-run
+  else
+    sudo nixos-rebuild dry-run --flake .#{{host}}
+  fi
+
+# Test a specific host. Usage: $ just test <host name>
 test host:
-  sudo nixos-rebuild test --flake .#{{host}}
+  #!/usr/bin/env bash
+  if nix eval .#darwinConfigurations.{{host}}.config.networking.hostName &>/dev/null; then
+    darwin-rebuild check --flake .#{{host}}
+  else
+    sudo nixos-rebuild test --flake .#{{host}}
+  fi
 
-# Deploy to a specific host. Usage: $ just deploy host <host name>
+# Deploy to a specific host. Usage: $ just deploy <host name>
 deploy host:
-  sudo nixos-rebuild switch --flake .#{{host}}
+  #!/usr/bin/env bash
+  if nix eval .#darwinConfigurations.{{host}}.config.networking.hostName &>/dev/null; then
+    darwin-rebuild switch --flake .#{{host}}
+  else
+    sudo nixos-rebuild switch --flake .#{{host}}
+  fi
 
-# Upgrade a specific host. Usage: $ just deploy host <host name>
+# Upgrade a specific host. Usage: $ just upgrade <host name>
 upgrade host:
-  sudo nixos-rebuild --upgrade switch --flake .#{{host}}
+  #!/usr/bin/env bash
+  if nix eval .#darwinConfigurations.{{host}}.config.networking.hostName &>/dev/null; then
+    darwin-rebuild switch --flake .#{{host}} --recreate-lock-file
+  else
+    sudo nixos-rebuild --upgrade switch --flake .#{{host}}
+  fi
 
-# Debug deployment to a specific host. Usage: $ just debug host <host name>
+# Debug deployment to a specific host. Usage: $ just debug <host name>
 debug host:
-  sudo nixos-rebuild switch --flake .#{{host}} --show-trace --verbose
+  #!/usr/bin/env bash
+  if nix eval .#darwinConfigurations.{{host}}.config.networking.hostName &>/dev/null; then
+    darwin-rebuild switch --flake .#{{host}} --show-trace --verbose
+  else
+    sudo nixos-rebuild switch --flake .#{{host}} --show-trace --verbose
+  fi
 
 # List past NixOS generations
 list-generations:

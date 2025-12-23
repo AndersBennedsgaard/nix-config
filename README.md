@@ -7,6 +7,16 @@ My NixOS and Home Manager configurations for personal use.
 - [Nix](https://nixos.org/download.html) with flakes enabled
 - Git
 
+## Mac Setup
+
+For Mac hosts using nix-darwin, first install the Darwin rebuild CLI:
+
+```bash
+nix run nix-darwin/master#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch
+```
+
+After this initial setup, the standard `just` commands will work as expected.
+
 ## Getting Started
 
 1. Clone this repository:
@@ -27,12 +37,12 @@ My NixOS and Home Manager configurations for personal use.
 
 1. Test a configuration (non-destructive):
    ```bash
-   just test host <hostname>
+   just test <hostname>
    ```
 
 1. Deploy a configuration:
    ```bash
-   just deploy host <hostname>
+   just deploy <hostname>
    ```
 
 ## Structure
@@ -44,23 +54,44 @@ My NixOS and Home Manager configurations for personal use.
 ## Common Tasks
 
 ```bash
+# Dry run a deployment (see changes without applying)
+just dry-run <hostname>
+
 # Debug deployment issues
-just debug host <hostname>
+just debug <hostname>
+
+# Upgrade a host (with lock file recreation)
+just upgrade <hostname>
 
 # Update all flake inputs
-just up
+just update
 
-# Update specific input
-just upp i=home-manager
+# Update specific input. <input> can be the name of any flake input, e.g., nixpkgs, home-manager, etc.
+just update-input <input>
 
-# View system history
+# Show system history
 just history
 
-# Clean up old generations
+# List past NixOS generations
+just list-generations
+
+# Clean up old generations (older than 7 days)
 just clean
+
+# Run garbage collection
+just gc
+
+# Delete specific generations
+just delete-specific-generations <generations>
+
+# Delete all old generations
+just delete-all-old-generations
+
+# Start Nix REPL
+just repl
 ```
 
-When updating using `just up`, remember to redeploy affected hosts to apply changes using `just deploy host <hostname>` or similar.
+When updating using `just update`, remember to redeploy affected hosts to apply changes using `just deploy <hostname>` or similar.
 
 ## Development
 
