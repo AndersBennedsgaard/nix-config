@@ -91,7 +91,8 @@ in {
       prettierd
       unzip
       pre-commit
-      clipScript
+      cheat
+      clipScript # custom clipboard utility
     ];
 
     # user-specific env vars
