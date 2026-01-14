@@ -92,6 +92,7 @@ in {
       unzip
       pre-commit
       cheat
+      prek
       clipScript # custom clipboard utility
     ];
 
