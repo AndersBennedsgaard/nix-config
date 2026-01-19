@@ -94,7 +94,14 @@
   environment.shells = [pkgs.bash pkgs.zsh];
 
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+        flags = ["-af --volumes"];
+      };
+    };
     podman.enable = true;
   };
 }
