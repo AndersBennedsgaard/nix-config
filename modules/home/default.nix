@@ -93,6 +93,7 @@ in {
       pre-commit
       cheat
       prek
+      sql-formatter
       clipScript # custom clipboard utility
     ];
 
